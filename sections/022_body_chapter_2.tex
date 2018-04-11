@@ -1,5 +1,53 @@
-%--- Chapter 2 ----------------------------------------------------------------% 
-\chapter{Methodology}
-\section{Chapter Two Section One}
+%--- Chapter 2 ----------------------------------------------------------------%
+\chapter{Power and Performance Tradeoffs Under Reduced Clock Frequencies}
+\label{ch:ldav}
 
+Most of the text in this chapter comes from \cite{7348074}, which was a
+collaboration between Matthew Larsen (LLNL), Hank Childs (UO), and myself.
+%
+The writing of this paper was a collaboration between Hank Childs and myself,
+and I performed the lead role on all writing, especially including the
+description of experiments and results.
+%
+Matthew Larsen and I wrote the benchmark tests.
+%
+Hank Childs and Matthew Larsen provided the data sets in different sizes and
+layouts.
+%
+Hank Childs and I developed the algorithm implementations.
+%
+I developed the performance monitoring infrastructure, designed and executed
+the study, and contributed to the majority of the other sections.
 
+This chapter explores the power and performance tradeoffs for one common
+visualization routines.
+%
+In this chapter, we focus specifically on isosurfacing, a canonical
+visualization algorithm, where the output is a three-dimensional surface
+containing points of a constant value.
+%
+We ran an extensive study to understand changes in execution behaviors when the
+CPU clock frequency is reduced.
+%
+Findings from this study begin to inform how we can tune algorithmic-level knobs
+to optimize energy and power usage.
+
+\section{Motivation}
+\input{sections/chapter2-ldav15/introduction.inc}
+
+\section{Related Work}
+\label{sec:ch2-relwork}
+\input{sections/chapter2-ldav15/relwork.inc}
+
+\section{Benchmark Tests}
+\label{sec:ch2-benchmarks}
+\input{sections/chapter2-ldav15/background.inc}
+
+\section{Experimental Setup}
+\input{sections/chapter2-ldav15/study.inc}
+
+\section{Results}
+\input{sections/chapter2-ldav15/results_intro.inc}
+
+\section{Summary}
+\input{sections/chapter2-ldav15/conclusion.inc}

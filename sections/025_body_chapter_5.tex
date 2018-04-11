@@ -1,0 +1,59 @@
+%--- Chapter 5 ----------------------------------------------------------------
+\chapter{Evaluating Techniques for Scheduling Power}
+\label{ch:tpds}
+
+Most of the text in this chapter comes from \cite{paviz.journal.inprogress},
+which is a collaboration between Matthew Larsen (LLNL), Hank Childs (UO), Barry
+Rountree (LLNL), and myself.
+%
+This journal paper is currently in progress.
+%towards submission to Journal of Parallel and Distributed Computing.
+
+Hank Childs and Matthew Larsen provided feedback on the overall organization of
+the manuscript.
+%
+Barry Rountree contributed to the related work on power research in HPC.
+%
+I developed the predictive runtime system.
+%
+The comparator runtime system is developed by Intel and uses adaptation of
+progress to assign power allocations across nodes.
+%
+I designed and executed the study, and was the primary contributor to the
+writing of the overall paper.
+
+This chapter compares the methodologies of using prediction and adaptation to
+make decisions on allocating power as a resource to nodes within a job.
+%
+Some runtime systems use adaptation, and extrapolate the execution behavior of
+the first few iterations of a loop to the subsequent iterations.
+%
+Our runtime system introduced in Chapter~\ref{ch:egpgv} uses prediction, which
+may be better suited for visualization routines which are data dependent and
+can be highly irregular.
+%
+Findings from this study inform which methodology is best suited for
+managing power resources for visualization applications.
+
+\section{Introduction}
+\input{sections/chapter5-tpds19/intro.inc}
+
+\section{Background and Related Work}
+\label{sec:ch5-relwork}
+\input{sections/chapter5-tpds19/relwork.inc}
+
+\section{Power-Aware Runtime Systems}
+\label{sec:ch5-runtimesys}
+\input{sections/chapter5-tpds19/power_overview.inc}
+
+\section{Experimental Overview}
+\label{sec:ch5-study}
+\input{sections/chapter5-tpds19/study.inc}
+
+\section{Results}
+\label{sec:ch5-results}
+\input{sections/chapter5-tpds19/results.inc}
+
+\section{Conclusion and Future Work}
+\label{sec:ch5-concl}
+\input{sections/chapter5-tpds19/concl.inc}

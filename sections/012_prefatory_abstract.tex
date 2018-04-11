@@ -1,6 +1,36 @@
 \abstract{
-	\IfFileExists{Abstract_Section.md.tex}{
-		\input{Abstract_Section.md.tex} % This loads the file. This is relative to the location of this file.
-	}
-	{} % If the file *doesn't exist, do nothing.
+
+\IfFileExists{Abstract_Section.md.tex}{
+    \input{Abstract_Section.md.tex} % This loads the file. This is relative to the location of this file.
+}
+
+{
+Power consumption is widely regarded as one of the biggest challenges to
+reaching the next generation of high performance computing (HPC).
+%
+On future supercomputers, power will be a limited resource.
+%
+This constraint will affect the performance of both simulation and
+visualization workloads.
+%
+Understanding how a particular application behaves under a power limit is
+critical to making better use of the limited power.
+%
+In this research, we focus specifically on visualization and analysis applications,
+which are an important component in HPC.
+%
+Visualization algorithms merit special consideration, since they are more
+data intensive in nature than traditional HPC programs, such as simulation
+codes.
+%
+We explore the power and performance tradeoffs for several common algorithms
+under different configurations, and understand how power constraints will
+affect execution behaviors.
+%
+We then demonstrate that we can gain additional performance by redistributing
+power based on performance predictions provided by the visualization algorithm.
+
+This dissertation includes previously published co-authored material.
+} % If the file *doesn't exist, do nothing.
+
 }

@@ -1,6 +1,61 @@
-%--- Chapter 4 ----------------------------------------------------------------% 
-\chapter{Conclusion}
-\section{Chapter Four Section One}
-\subsection{Chapter four seciton one sub-section one}
-\subsubsection{Chapter four seciton one sub-section one sub-sub-section one}
+%--- Chapter 4 ----------------------------------------------------------------%
+\chapter{Power-Aware Runtime System for Visualization}
+\label{ch:egpgv}
 
+Most of the text in this chapter comes from \cite{pgv.20171088}, which was a
+collaboration between Matthew Larsen (LLNL), Hank Childs (UO), Barry Rountree
+(LLNL), and myself.
+%
+Barry Rountree primarily wrote the overview of power in high performance
+computing, although I provided some contributions as well.
+%
+The related work section on volume rendering was written by Matthew Larsen,
+while I wrote the sections on power and the intersection of scientific
+visualization and power.
+%
+Matthew Larsen provided guidance on the software integration between
+performance predictions and the runtime system.
+%
+I developed the power-aware runtime system, decision strategies, and
+necessary monitoring infrastructure, designed and executed the study, and was
+the primary contributor to the writing of the overall paper.
+
+This chapter demonstrates how we can exploit the variation in visualization
+workloads by dynamically reallocating power.
+%
+By exposing application-level information from the visualization routine to a
+central manager, additional performance can be realized.
+%
+We implemented a runtime system that uses an existing performance model to
+dynamically reallocate power across nodes within a job.
+%
+This study shows that using prediction to adapt power across nodes is an
+effective strategy for optimizing performance for visualization applications,
+which can be more unpredictable and irregular in nature.
+
+\section{Motivation}
+\input{sections/chapter4-egpgv17/intro.inc}
+
+\section{HPC and Power Overview}
+\label{sec:ch4-powhpc}
+\input{sections/chapter4-egpgv17/hpcpower.inc}
+
+\section{Related Work}
+\label{sec:ch4-relwork}
+\input{sections/chapter4-egpgv17/relwork.inc}
+
+\section{Our Approach for Adaptive Power Scheduling}
+\label{sec:ch4-adaptive}
+\input{sections/chapter4-egpgv17/algorithm.inc}
+
+\section{Study Overview}
+\label{sec:ch4-parameters}
+\input{sections/chapter4-egpgv17/setup.inc}
+
+\section{Results}
+\label{sec:ch4-results}
+\input{sections/chapter4-egpgv17/results.inc}
+
+\section{Conclusion}
+\label{sec:ch4-concl}
+\input{sections/chapter4-egpgv17/concl.inc}

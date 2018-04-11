@@ -1,6 +1,81 @@
-%%--- Chapter 3 ---------------------------------------------------------------%
-\chapter{Results}
-\section{Chapter Three Section One}
-\subsection{Chapter three seciton one sub-section one}
-\subsubsection{Chapter three seciton one sub-section one sub-sub-section one}
+%--- Chapter 3 ---------------------------------------------------------------%
+\chapter{Power and Performance Tradeoffs Under Power Limits}
+\label{ch:ipdps}
 
+Most of the text in this chapter comes from \cite{ipdps2019.toappear}, which
+was a collaboration between Matthew Larsen (LLNL), Hank Childs (UO), Barry
+Rountree (LLNL), and myself.
+%
+This paper has been accepted for publication at the 2019 IEEE International
+Parallel and Distributed Processing Symposium (IPDPS).
+
+The writing of this paper was a collaboration between Hank Childs, Matthew
+Larsen, Barry Rountree, and myself.
+%
+I was the primary contributor to the writing of the overall paper.
+%
+Additionally, I developed the performance monitoring infrastructure, and
+designed and executed the study.
+%
+The overview of power usage in high performance computing was a collaboration
+between Barry Rountree and myself.
+%
+Hank Childs and Matthew Larsen provided guidance on organization and also
+provided edits to the final paper.
+
+This chapter explores the power and performance tradeoffs for a representative
+set of visualization algorithms.
+%
+An important premise of this work is that power will be a limited resource on
+future supercomputers, necessitating an understanding of how applications
+behave under a power limit.
+%
+This is a follow-up study to the work presented in Chapter~\ref{ch:ldav}, which
+demonstrated opportunities for power and energy savings in a visualization
+workload.
+%
+With this more thorough study, we investigate the power and performance
+tradeoffs for a larger set of visualization algorithms.
+%
+Whereas Chapter~\ref{ch:ldav} explored the variation under reduced clock
+frequencies, this chapter explores the variation under reduced power limits
+(ultimately, reducing the CPU frequency).
+%
+The result of this study provides the core of the research presented in this
+dissertation.
+%
+We provide a set of recipes that can better inform scientists and tool
+developers on the effects of visualization-specific input parameters on power
+usage and performance.
+
+\section{Motivation}
+\input{sections/chapter3-ipdps19/intro.inc}
+
+\input{sections/chapter3-ipdps19/relwork-rewrite.inc}
+
+\label{sec:ch3-motivation}
+\input{sections/chapter3-ipdps19/motivation.inc}
+
+\section{Experimental Overview}
+\label{sec:ch3-study}
+\input{sections/chapter3-ipdps19/study.inc}
+
+\subsection{Methodology}
+\label{sec:ch3-methods}
+\input{sections/chapter3-ipdps19/methodology.inc}
+
+\section{Definition of Metrics}
+\label{sec:ch3-metrics}
+\input{sections/chapter3-ipdps19/metrics.inc}
+
+\section{Results}
+\label{sec:ch3-results}
+\input{sections/chapter3-ipdps19/results-rewrite.inc}
+
+\section{Summary of Findings}
+\label{sec:ch3-summary}
+\input{sections/chapter3-ipdps19/summary.inc}
+
+\section{Conclusion}
+\label{sec:ch3-concl}
+\input{sections/chapter3-ipdps19/concl.inc}

@@ -1,0 +1,46 @@
+%
+%  This document 'stitches together' the sections that are broken out
+%  into the .tex files representing those document parts.
+%
+%\input{sections/000_preamble}
+\include{sections/tex_defs}
+
+
+%\input{sections/010_prefatory}
+\input{sections/011_prefatory_cover}
+\input{sections/012_prefatory_abstract}
+\input{sections/013_prefatory_cv}
+\input{sections/014_prefatory_acknowledgements}  % acknowledgments page optional
+\input{sections/015_prefatory_dedication}        % dedication page optional
+
+\begin{document}
+
+% Following https://tex.stackexchange.com/a/313605
+% these two options will allow a rendered PDF to have % the same checksum every time.
+%\pdfinfoomitdate=1
+%\pdftrailerid{}
+
+\maketitle
+
+\include{sections/021_body_chapter_1}
+\include{sections/022_body_chapter_2}
+\include{sections/023_body_chapter_3}
+\include{sections/024_body_chapter_4}
+\include{sections/025_body_chapter_5}
+\include{sections/026_body_chapter_6}
+
+%\input{sections/030_appendix}
+
+
+%\input{sections/040_bibliography}
+%------------------------------------------------------------------------------%
+% BIBILIOGRAPHY
+%------------------------------------------------------------------------------%
+% \bibliography{bibfile} % This is an example line that will load up "./bibfile.bib" and use it to create a bibliography.
+% \bibliography{example/bibfile} % This would load up "./example/bibfile.bib" and use it to create a bibliography.
+
+\bibliography{citations} % This is relative to the location of this file. For two files, there need to be *no spaces* between the comma and the files, per http://tex.stackexchange.com/a/91655.
+    % You can add ',R_Packages_Bibliography_Automatically_Generated' above if you enable the R-package-citation code in the build script.
+
+
+\end{document}

@@ -128,9 +128,9 @@
 \iflipsum
 \RequirePackage{lipsum}
 \fi
-\ifapacite
-\RequirePackage[natbibapa]{apacite}
-\fi
+%\ifapacite
+%\RequirePackage[natbibapa]{apacite}
+%\fi
 
 \ifdraft
 \RequirePackage{draftwatermark}
@@ -168,8 +168,8 @@
 \newcommand*{\etc}{\@ifnextchar.{\cst@etc}{\cst@etc.\cst@xspace}}
 \newcommand*{\invacuo}{\cst@latin{in vacuo}\cst@xspace}
 \newcommand*{\etal}{\@ifnextchar.{\cst@etal}{\cst@etal.\cst@xspace}}
-\newcommand*{\eg}{\cst@eg.}
-\newcommand*{\ie}{\cst@ie.}
+\newcommand*{\eg}{\cst@eg., }
+\newcommand*{\ie}{\cst@ie., }
 \newcommand*{\cst@etal}{\cst@latin{et~al}}
 \newcommand*{\cst@etc}{\cst@latin{etc}}
 \newcommand*{\cst@ie}{\cst@latin{i.e\spacefactor999\relax}}
@@ -333,7 +333,8 @@ of this document.}
      \hbox to0pt{}\nointerlineskip\vskip\@tempdima
 }
 
-\setcounter{tocdepth}{3}   
+\setcounter{tocdepth}{1} % Change to 1 if only want subsections (i.e., 3.1,
+                         % 3.2) to show in TOC
 \newcounter{@shownumdepth}
 
 \if@gsmodern
@@ -403,7 +404,8 @@ of this document.}
         \@committee\\ \\ 
       \fi
       and & \\ \\
-      \@graddean &  Dean of the Graduate School
+      \@graddean &  Vice Provost and Dean of the Graduate School
+      %\@graddean &  Dean of the Graduate School
     \end{tabular}\\*[\baselineskip]
     Original approval signatures are on file with the
     University of Oregon Graduate School.\\*[\baselineskip]
@@ -802,9 +804,9 @@ Draft of \@longdraftdate\\
        \@sechack\@dottedtocline{1}{0.5in}{2em}}
   \else
 	% Edit by JL: I changed all 2em to 0em below -- the second set of brackets in each of these controls the hanging indent for wrapped lines.
-    \def\l@section{\@sechack\@dottedtocline{1}{0.5in}{0em}}  % sections other than Chapters  indent is .5 inch
-    \def\l@subsection{\@sechack\@dottedtocline{2}{0.75in}{0em}}  % sections other than Chapters  indent is .5 inch
-    \def\l@subsubsection{\@sechack\@dottedtocline{3}{1in}{0em}}  % sections other than Chapters  indent is .5 inch
+    \def\l@section{\@sechack\@dottedtocline{1}{0.5in}{2em}}  % sections other than Chapters  indent is .5 inch
+    \def\l@subsection{\@sechack\@dottedtocline{2}{0.75in}{3em}}  % sections other than Chapters  indent is .5 inch
+    \def\l@subsubsection{\@sechack\@dottedtocline{3}{1in}{4em}}  % sections other than Chapters  indent is .5 inch
   \fi
 \fi
 \def\l@figure{\@dottedtocline{0}{0in}{2.3em}}%

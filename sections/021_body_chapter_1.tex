@@ -1,23 +1,263 @@
-%--- Chapter 1 ----------------------------------------------------------------%    
+%--- Chapter 1 ----------------------------------------------------------------%
 \chapter{Introduction}
-\section{Chapter One Section One}
-\subsection{Chapter one seciton one sub-section one}
-\subsubsection{Chapter one seciton one sub-section one sub-sub-section one}
+\label{ch:intro}
 
-%--- Chapter 2 ----------------------------------------------------------------% 
-\chapter{Methodology}
-\section{Chapter Two Section One}
+\section{Motivation}
+Power is a key challenge in achieving the next generation of high performance
+computing (HPC).
+%
+At the start of this decade, scaling current technologies to higher concurrency
+would have produced a machine requiring gigawatts or
+more~\cite{oppschallengesexascale,ascr2013operruntimesys,Sarkar09softwarechallenges}.
+%
+Such a power-hungry machine results in unfeasible operational costs.
+%
+As a result, power has become a severely limited resource moving forward.
+%
+One major change in response to this limitation was a shift towards many-core
+architectures, which have higher efficiency.
+%
+That said, the premise of this research is that hardware changes are not
+enough, \ie achieving an exaflop within specified power constraints will
+require innovation across all aspects of HPC, including runtime
+infrastructures, simulation, and visualization codes.
 
-%%--- Chapter 3 ---------------------------------------------------------------%
-\chapter{Results}
-\section{Chapter Three Section One}
-\subsection{Chapter three seciton one sub-section one}
-\subsubsection{Chapter three seciton one sub-section one sub-sub-section one}
+Current supercomputer designs assume sufficient power will be available to
+run all compute nodes concurrently at their maximum thermal design point
+(TDP).
+%
+Said another way, TDP is the theoretical maximum power a given node will ever
+consume.
+%
+As power requirements for supercomputers move into the range of dozens of
+megawatts, the strategy of allocating power for all nodes to run at TDP becomes
+untenable.
+%
+Very few applications run at TDP, and provisioning very large
+systems as if most did both wastes power capacity and unnecessarily
+%unduly
+constrains the size of the supercomputer.
 
+Overprovisioning~\cite{Patki:2013:EHO:2464996.2465009}, short for hardware
+overprovisioning, is one solution to improve power utilization.
+%
+In such a design, we increase the compute capacity (\ie number of nodes) of the
+system, but,
+in order to not exceed the system power allocation,
+not every node will be able to run at TDP simultaneously.
 
-%--- Chapter 4 ----------------------------------------------------------------% 
-\chapter{Conclusion}
-\section{Chapter Four Section One}
-\subsection{Chapter four seciton one sub-section one}
-\subsubsection{Chapter four seciton one sub-section one sub-sub-section one}
+Consider the example of the Vulcan supercomputer at Lawrence Livermore National
+Laboratory.
+%
+It was allocated for 2.4 MW assuming all 24,576 nodes consumed TDP, but the vast
+majority of applications running on that machine did not exceed 60\% of the
+allocated power (1.47 MW average system power
+consumption)~\cite{Patki:2015:PRM:2749246.2749262}.
+%
+Thus, the strategy of allocating TDP to every node failed to take advantage of
+nearly 1 MW of power on average.
+%
+An overprovisioned approach system would contain about 34,000 nodes (40\%
+increase) consuming some amount of power less than TDP.
+%
+With such a system, the machine consumes all allocated power and reduces
+trapped capacity~\cite{7016386}.
 
+For overprovisioning to be a success, it must be complemented with a scheme to
+limit nodes' power usage, to ensure the total provisioned power is never
+exceeded.
+%
+One way to accomplish this is to uniformly cap the power available to each
+node, \eg each node can use only up to $60\%$ of its TDP.
+%
+The result of applying such a power cap is that the processor operating
+frequency is reduced.
+%
+The effect of reduced CPU frequency is variable; applications dominated by
+computation
+will slow down proportionally, while applications dominated by memory accesses may
+be unaffected.
+%
+Despite the performance degradation for individual jobs, this strategy
+would lead to better power utilization and greater overall throughput.
+
+Uniform power allocations per node, however, is a sub-optimal strategy.
+%
+The runtime behaviors of distributed applications can be
+highly variable across nodes.
+%
+The nodes assigned the largest amount of work become a bottleneck and determine
+the overall performance of the application.
+%
+On the other hand, nodes that are assigned the smallest amount of work finish
+quickly and sit idle until the other nodes have completed execution.
+%
+A better strategy is to dynamically assign power to where it will do the most good.
+%
+This is a non-trivial problem.
+%
+In an ideal scenario, we would assign the power such that all nodes finish
+executing at the same time despite varying workloads.
+
+Overprovisioned systems lend themselves to multiple levels of
+optimization.
+%
+At the job scheduling level, individual job power bounds are allocated to
+optimize throughput and/or turn-around
+time~\cite{Patki:2015:PRM:2749246.2749262}.
+%
+Alternatively, there are dynamic optimizations to individual jobs that may be
+realized by rebalancing power and changing node configuration at
+runtime~\cite{geopm,10.1007/978-3-319-58667-0_21,Marathe2015}.
+
+While much previous research has studied adapting power usage for simulations,
+this dissertation considers how visualization routines will need
+to adapt to a power-limited environment, where compute nodes will be limited in
+their power usage.
+%
+The motivation for studying visualization is two-fold.
+%
+First, visualization is a critical component in the scientific discovery
+process.
+%
+Additionally, visualization is moving to an in situ workflow, where the
+visualization will run concurrently with the simulation.
+%
+Therefore, optimizing the performance of the visualization component is
+beneficial, since the visualization can use significant resources on the HPC
+system.
+%
+Second, visualization workloads are different than the typically HPC
+applications like simulation codes, since they are more data intensive.
+%
+For both of these reasons, visualization workloads merit special considering in
+this power-limited environment.
+
+\section{Research Goals and Approaches}
+
+The central question that this dissertation addresses is:
+%
+\emph{How can we optimize the performance of scientific visualization
+algorithms in a power-constrained environment?"}
+%
+This main idea can be further broken down into the following research goals.
+
+The first research goal is to explore how tunable input parameters within
+visualization algorithms impact performance, energy, and power usage.
+%
+On future supercomputers, visualization routines will need to
+adapt to the power-limited environment, where compute nodes will be limited in
+their power usage.
+%
+Current strategies for power management are not aware of what phase (\eg
+computational, memory, I/O, etc.) the application is in.
+%
+Understanding the impacts of particular input parameters is critical in making
+a decision between optimizing performance and staying under a specified power limit.
+%
+Since the space of tunable parameters can grow exponentially large, this
+information forms the basis for generating performance models relating
+execution time, energy usage, and power consumption.
+%
+Understanding the specific execution behaviors of visualization algorithms will
+enable us to develop better power-aware strategies for optimal performance and
+power usage.
+
+The second research goal is to improve performance by exploiting the
+variation in visualization workloads when dynamically reallocating power
+%
+The scientific visualization community is moving towards in situ, where data is
+processed alongside the simulation (as opposed to processed post hoc).
+%
+For in situ strategies, power will need to be shared in some fashion between
+the scientific simulation and visualization~\cite{7515682}.
+%
+Exploring power management strategies for visualization routines will be
+critical in improving the overall turn-around time for in situ workflows.
+%
+Visualization workloads can be imbalanced, and allocating power relative to
+the amount of work each compute node has is a good strategy for improving
+performance.
+%
+We use an existing visualization-specific performance model to determine how
+best to share the power across nodes in order to optimize performance.
+%
+This shows the need for additional performance models to improve performance of
+other visualization algorithms.
+
+\section{Dissertation Outline}
+
+Putting it all together, scientific visualization is a key component of the
+scientific discovery process.
+%
+It enables the exploration and analysis of scientific data, and the ability to
+communicate findings through a comprehensible image.
+%
+Visualization at exascale will be challenging due to constraints in power
+usage.
+%
+Under this power-limited environment, visualization algorithms merit special
+consideration, since they are more data intensive in nature than typical HPC
+applications like simulation codes.
+
+At present, there is a very limited set of work addressing
+the challenges of visualization and analysis with respect to power constraints
+on future architectures.
+%
+The goal of my dissertation is to explore this field uniquely positioned at the
+intersection of power-constrained HPC and visualization in order to provide
+understanding of the tradeoffs between power and performance specifically for
+visualization routines.
+%
+Understanding the specific execution behaviors of visualization algorithms will
+enable us to develop better power-aware strategies for optimal performance and
+power usage.
+
+This dissertation is organized as follows:
+\begin{itemize}
+%
+\item Chapters~\ref{ch:ldav} and~\ref{ch:ipdps}: We evaluate the tradeoffs
+between performance and power usage when varying different input parameters for
+a representative set of visualization algorithms.
+%
+\item Chapter~\ref{ch:egpgv}: We develop a power-aware visualization framework that
+incorporates prediction to dynamically reallocate power within a job
+and improve performance of a visualization algorithm.
+%
+\item Chapter~\ref{ch:tpds}: We evaluate a predictive and adaptive scheduling
+strategy for dynamically reallocating power within a job.
+%
+\item Chapter~\ref{ch:concl}: We discuss ideas for future research directions
+in the area of visualization and power usage.
+%
+\end{itemize}
+
+\section{Co-Authored Material}
+Much of the work in this dissertation is from previously published co-authored
+material.
+%
+Below is a listing connecting the chapters with the publications and authors
+that contributed.
+%
+Further detail on the division of labor is provided at the beginning of each
+chapter.
+%
+That said, for each of these publications, I was not only the first author of
+the paper, but also the primary contributor for implementing systems,
+conducting studies, and writing manuscripts.
+%
+\begin{itemize}
+%
+\item Chapter~\ref{ch:ldav}: \cite{7348074} was a collaboration between Matthew Larsen
+(LLNL), Hank Childs (UO), and myself.
+%
+\item Chapter~\ref{ch:ipdps}: \cite{ipdps2019.toappear} was a collaboration between Matthew
+Larsen (LLNL), Hank Childs (UO), Barry Rountree (LLNL), and myself.
+%
+\item Chapter~\ref{ch:egpgv}: \cite{pgv.20171088} was a collaboration between Matthew Larsen
+(LLNL), Hank Childs (UO), Barry Rountree (LLNL), and myself.
+%
+\item Chapter~\ref{ch:tpds}: \cite{paviz.journal.inprogress} was a collaboration between
+Matthew Larsen (LLNL), Hank Childs (UO), Barry Rountree (LLNL), and myself.
+%
+\end{itemize}

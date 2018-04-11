@@ -1,0 +1,252 @@
+%--- Chapter 6 ----------------------------------------------------------------
+\chapter{Conclusion and Future Directions}
+\label{ch:concl}
+
+\section{Synthesis}
+
+Scientific visualization is a key component in the scientific discovery process.
+%
+It enables the exploration and analysis of scientific data, and the ability to
+communicate findings through a comprehensible image.
+%
+Visualization at exascale will be challenging due to constraints in power
+usage.
+%
+Under this power-limited environment, visualization algorithms merit special
+consideration, since they are more data intensive in nature than typical HPC
+applications like simulation codes.
+%
+At present, there is a very limited set of work addressing the challenges of
+visualization and analysis with respect to power constraints on future
+architectures.
+%
+The central question of this thesis is: \emph{How can we optimize the
+performance of scientific visualization workloads in a power-limited
+environment?}
+
+The research presented in this dissertation explored this field uniquely
+positioned at the intersection of power-constrained HPC and scientific
+visualization.
+%
+This dissertation first provided an in-depth exploration of the variation in
+visualization routines.
+%
+We found that most visualization algorithms are data intensive and have
+favorable power and performance tradeoffs when the clock frequency is slowed
+whether directly or indirectly through lower power limits enforced on Intel
+architectures.
+%
+Then, we exploited the variation present in visualization algorithms and showed
+performance improvements.
+%
+We used existing performance models for parallel rendering to develop a
+power-aware resource manager called PaViz.
+%
+PaViz dynamically allocates power based on a prediction of execution times.
+%
+We compare this predictive approach with an adaptive approach in a runtime
+system known as GEOPM, which automatically adapts power to the current
+execution behaviors.
+%
+This piece of the dissertation found that prediction performs better than
+adaptation on irregular visualization workloads.
+
+Looking forward, the HPC community is moving towards heterogeneous computing
+for improved power efficiency and performance.
+%
+This new supercomputing architecture will significantly challenge the way we
+have traditionally designed our software.
+%
+The research in this dissertation specifically targeted Intel x86
+architectures, since Intel was one of the early architectures to expose power
+capping on their processors.
+%
+Additional vendors have since exposed similar power capping mechanisms on their
+platforms.
+%
+The granularity of control as well as the range of available power limits may
+vary across vendor architectures.
+%
+For example, Intel's power capping technology controls the processor and DRAM
+domain through a register interface.
+%
+The underlying clock frequencies are modulated to adjust to the specified power
+limit.
+%
+IBM's power capping technology applies the limit at the server-level specified
+through a platform management interface.
+%
+The server power limit will affect the power limit allowed to each component
+contained within the server.
+%
+NVIDIA's power capping technology affects the accelerator itself by modulating
+clock frequencies similar to Intel.
+
+Each architecture may expose a different range of acceptable power limits.
+%
+The range will depend on the minimum and maximum power limits that allow for
+reliable operation.
+%
+If the power limit is too low, then the components will not operate, and if the
+power limit is too high, then the components will overheat due to excessive
+power.
+%
+Depending on the range of power limits (and the range of clock frequencies),
+this may enable favorable opportunities for power and energy savings.
+%
+However, for heterogeneous platforms containing CPU and GPU architectures, it
+may not be a flexible solution to set power limits per device.
+%
+Instead, it may be better to expose a ratio that informs how node power should
+be shared between the two central components.
+
+VTK-m has enabled the development of visualization algorithms portable across
+many different types of platforms.
+%
+This dissertation provided a thorough exploration of the opportunities for
+power and energy savings for a representative set of VTK-m algorithms as a more
+severe power limit is applied to an Intel processor.
+%
+Heterogeneous GPU and CPU architectures are becoming prominent in supercomputer
+architectures.
+%
+Visualization workloads targeting GPU architectures may expose different
+tradeoffs, since users may decide to run the workload on the GPU instead
+of the CPU.
+%
+GPUs have a higher power usage, since they are designed for
+highly computational algorithms.
+%
+The ability to slow down the GPU may not result in favorable energy and power
+savings as we have seen with CPU architectures.
+
+The existing performance models for parallel rendering use rendering specific
+input variables, which will not be impacted as we move from one architecture to
+another.
+%
+What will change as we move to a different architecture are the model
+coefficients, since these are determined by gathering runtime performance data
+across a range of configurations representing in situ rendering use cases.
+%
+At present, the coefficients are obtained offline, but a more advanced
+infrastructure may determine and adjust the coefficients online.
+
+Developing performance models for each visualization operation is untenable.
+%
+One solution is to develop performance models for classes of algorithms.
+%
+Alternatively, another solution is to develop feedback infrastructure where
+algorithms expose application-level information to an adaptive framework (like
+GEOPM), enabling the framework to make more informed decisions on where the
+power should be allocated to do the most good.
+
+\section{Future Directions}
+There are four areas of future research that can build on the work presented
+in this dissertation.
+%
+We detail them in the following subsections.
+
+\subsection{Exploring Tradeoffs on Different Hardware Architectures}
+
+The majority of this research targeted Intel processors, which have provided
+fine-grained power capping technologies since the Sandy Bridge processor
+family.
+%
+Future exascale architectures are moving to heterogeneous computing, meaning we
+will need to understand how the power and performance tradeoffs change when
+moving to different hardware platforms, such as accelerators and other CPUs.
+%
+Every vendor has a different implementation of power capping, ranging from the
+granularity at which the power cap is applied (\eg socket, motherboard, node)
+to how reactive the system is to the power cap.
+%
+This is traditionally an operation limited to a set of privileged users.
+%
+Exploring how the power and performance tradeoffs change when moving to a
+different architecture will impact how we develop future power scheduling
+strategies.
+%
+Should future research explore the tradeoffs at large scale, a driver must be
+developed for each architecture to enable setting of power caps from user
+space.
+
+\subsection{Evaluating When to Use Prediction or Adaptation}
+
+Chapter~\ref{ch:egpgv} and Chapter~\ref{ch:tpds} showed that additional performance
+for a distributed visualization application can be realized by leveraging a
+performance model or using adaptation to determine how to schedule power across
+nodes within a job.
+%
+This area of research is two-fold.
+%
+First, determining a theoretical upper bound for improved performance is
+critical in determining the effectiveness of such a runtime system.
+%
+Once the theoretical bound has been identified, we can evaluate the efficacy of
+the adaptive or predictive approaches on performance.
+
+Determining when to use prediction and when to use adaptation is a key area of
+future research.
+%
+Prediction has high overhead costs (\ie human time) to create the models, and
+may not be feasible if a performance model cannot be generated for the
+workload.
+%
+But, prediction is also well-suited for irregular and unpredictable workloads,
+like visualization.
+%
+On the other hand, adaptation is an online approach, minimizing the overhead
+costs of needing to do setup.
+%
+For regular workloads, the online approach can spend the first few iterations
+learning the unique execution behaviors, and then apply the optimum strategy to
+the remaining iterations to improve performance.
+%
+For irregular workloads, using adaptation may be a suboptimal strategy as the
+decisions may never converge on a solution.
+
+\subsection{Creating Additional Performance Models}
+This research used an existing performance model specifically for rendering,
+and showed it resulted in better performance improvements than the adaptive
+strategy.
+%
+However, establishing models for other visualization algorithms is a
+challenging task, and may not be possible for all available visualization
+workloads.
+%
+There are hundreds of different visualization algorithms; some will be
+straight-forward to create an accurate performance model, while others will be
+more difficult to estimate performance based on their input parameters.
+%
+Depending on the number of visualization operations chained together in the
+pipeline, it may be less overhead for similar performance gains to use
+adaptation rather than create a performance model for each operation.
+
+\subsection{Integration into Production Resource Manager}
+
+If we want to make a significant impact on the mission-critical applications
+doing visualization, then the power-aware runtime system should be integrated
+into a production manager, like SLURM.
+%
+In this model, SLURM would be extended to assign power budgets to each
+job~\cite{7103433},
+then it would be the duty of the job to manage the budget between the nodes it
+has been allocated.
+%
+The power-aware resource manager could use the entirety of the power budget it
+has been given to complete its job.
+%
+Alternatively, since findings in Chapter~\ref{ch:ipdps} identified that a large
+set of visualization algorithms consume very little power, the resource manager
+may choose to use a subset of the original budget, letting SLURM re-allocate
+the extra power to another job.
+
+One of the challenges to improving performance with power reallocation is
+having a visualization pipeline that has a long enough execution time to see
+the impacts of a change in the power limit.
+%
+Another challenge when considering power shifting is ensuring that the larger
+system does not exceed its system-wide power budget.
+%
+Exceeding the system-wide power budget can cause damage to the underlying
+hardware and limit its lifespan.
